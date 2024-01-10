@@ -13,3 +13,6 @@ class URL(URLBase):
 class URLInfo(URL):
     url: str
     admin_url: str
+
+    class Config:
+        from_attributes: True
