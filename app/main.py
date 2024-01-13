@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Depends, HTTPException, Request, status
+from fastapi.middleware.cors import CORSMiddleware
 from starlette.datastructures import URL
 from fastapi.responses import RedirectResponse
 from . import schemas, models, crud, keygen
@@ -9,6 +10,15 @@ import validators
 
 app = FastAPI()
 models.Base.metadata.create_all(bind=engine)
+
+origins = ["*"]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 def raise_bad_request(message):
     raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=message)
